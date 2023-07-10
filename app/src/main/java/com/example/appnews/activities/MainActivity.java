@@ -38,11 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_categories) {
-            ToolbarHelper.openCategoryList(this.getSupportFragmentManager());
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+        return ToolbarHelper.handleOptionsItemSelected(this, item, getSupportFragmentManager()) || super.onOptionsItemSelected(item);
     }
 
 }

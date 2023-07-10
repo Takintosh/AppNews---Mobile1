@@ -25,6 +25,17 @@ public class ToolbarHelper {
         }
     }
 
+    public static boolean handleOptionsItemSelected(Activity activity, MenuItem item, FragmentManager fragmentManager) {
+        if (item.getItemId() == R.id.action_categories) {
+            // Abre el fragmento de categorías
+            if (item.getItemId() == R.id.action_categories) {
+                openCategoryList(fragmentManager);
+                return true;
+            }
+        }
+        return false;
+    }
+
     /*
     public static boolean handleOptionsItemSelected(Activity activity, MenuItem item) {
         if (item.getItemId() == R.id.action_categories) {
