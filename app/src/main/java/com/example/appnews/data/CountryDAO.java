@@ -21,12 +21,12 @@ public class CountryDAO {
     public long insertCountry(Country country) {
         ContentValues values = new ContentValues();
         values.put("country_name", country.getCountryName());
-
+        values.put("iso_code", country.getCountryCode());
         return db.insert("countries", null, values);
     }
 
     public Country getCountry(int countryId) {
-        String[] projection = {"id", "country_name"};
+        String[] projection = {"id", "country_name", "iso_code"};
         String selection = "id = ?";
         String[] selectionArgs = {String.valueOf(countryId)};
 
@@ -35,6 +35,7 @@ public class CountryDAO {
             Country country = new Country();
             country.setId(cursor.getInt(cursor.getColumnIndexOrThrow("id")));
             country.setCountryName(cursor.getString(cursor.getColumnIndexOrThrow("country_name")));
+            country.setCountryCode(cursor.getString(cursor.getColumnIndexOrThrow("iso_code")));
             cursor.close();
             return country;
         } else {
@@ -45,7 +46,7 @@ public class CountryDAO {
 
     public List<Country> listCountries() {
         List<Country> listCountries = new ArrayList<>();
-        String[] projection = {"id", "country_name"};
+        String[] projection = {"id", "country_name", "iso_code"};
 
         Cursor cursor = db.query("countries", projection, null, null, null, null, null);
 
@@ -53,6 +54,7 @@ public class CountryDAO {
             Country country = new Country();
             country.setId(cursor.getInt(cursor.getColumnIndexOrThrow("id")));
             country.setCountryName(cursor.getString(cursor.getColumnIndexOrThrow("country_name")));
+            country.setCountryCode(cursor.getString(cursor.getColumnIndexOrThrow("iso_code")));
 
             listCountries.add(country);
         }
