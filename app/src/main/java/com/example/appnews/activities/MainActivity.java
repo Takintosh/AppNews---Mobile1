@@ -5,7 +5,6 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.example.appnews.R;
 import com.example.appnews.fragments.NewsListFragment;
@@ -38,7 +37,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        return ToolbarHelper.handleOptionsItemSelected(this, item, getSupportFragmentManager()) || super.onOptionsItemSelected(item);
+        return ToolbarHelper.handleOptionsItemSelected(this, item, getSupportFragmentManager(), R.id.fragment_container)
+                || super.onOptionsItemSelected(item);
     }
 
 }
