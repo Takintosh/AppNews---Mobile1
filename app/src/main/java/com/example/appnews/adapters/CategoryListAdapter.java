@@ -9,14 +9,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appnews.R;
+import com.example.appnews.models.Category;
 
 import java.util.List;
 
 public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapter.CategoryViewHolder> {
 
-    private List<String> categories;
+    private List<Category> categories;
 
-    public CategoryListAdapter(List<String> categories) {
+    public CategoryListAdapter(List<Category> categories) {
         this.categories = categories;
     }
 
@@ -29,8 +30,8 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
 
     @Override
     public void onBindViewHolder(@NonNull CategoryViewHolder holder, int position) {
-        String category = categories.get(position);
-        holder.textViewCategory.setText(category);
+        Category category = categories.get(position);
+        holder.bind(category);
     }
 
     @Override
@@ -44,6 +45,11 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
         public CategoryViewHolder(View itemView) {
             super(itemView);
             textViewCategory = itemView.findViewById(R.id.textViewCategory);
+        }
+
+        public void bind(final Category category) {
+            textViewCategory.setText(category.getCategoryName());
+            itemView.setTag(category);
         }
     }
 }
