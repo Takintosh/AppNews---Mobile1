@@ -20,11 +20,12 @@ public class CategoryDAO {
     public long insertCategory(Category category) {
         ContentValues values = new ContentValues();
         values.put("category_name", category.getCategoryName());
+        values.put("category_tag", category.getCategoryTag());
         return db.insert("categories", null, values);
     }
 
     public Category getCategory(int categoryId) {
-        String[] projection = {"id", "category_name"};
+        String[] projection = {"id", "category_name", "category_tag"};
         String selection = "id = ?";
         String[] selectionArgs = {String.valueOf(categoryId)};
 
@@ -33,6 +34,7 @@ public class CategoryDAO {
             Category category = new Category();
             category.setId(cursor.getInt(cursor.getColumnIndexOrThrow("id")));
             category.setCategoryName(cursor.getString(cursor.getColumnIndexOrThrow("category_name")));
+            category.setCategoryTag(cursor.getString(cursor.getColumnIndexOrThrow("category_tag")));
             cursor.close();
             return category;
         } else {
@@ -43,7 +45,7 @@ public class CategoryDAO {
 
     public List<Category> listCategories() {
         List<Category> listCategories = new ArrayList<>();
-        String[] projection = {"id", "category_name"};
+        String[] projection = {"id", "category_name", "category_tag"};
 
         Cursor cursor = db.query("categories", projection, null, null, null, null, null);
 
@@ -51,6 +53,7 @@ public class CategoryDAO {
             Category category = new Category();
             category.setId(cursor.getInt(cursor.getColumnIndexOrThrow("id")));
             category.setCategoryName(cursor.getString(cursor.getColumnIndexOrThrow("category_name")));
+            category.setCategoryTag(cursor.getString(cursor.getColumnIndexOrThrow("category_tag")));
 
             listCategories.add(category);
         }

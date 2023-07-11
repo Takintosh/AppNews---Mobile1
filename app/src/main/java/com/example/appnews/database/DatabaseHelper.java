@@ -19,10 +19,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         // Estructura de la base de datos
         Log.d(TAG, "Creando tablas...");
-        db.execSQL("CREATE TABLE IF NOT EXISTS categories (id INTEGER PRIMARY KEY AUTOINCREMENT, category_name TEXT)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS categories (id INTEGER PRIMARY KEY AUTOINCREMENT, category_name TEXT, category_tag TEXT)");
         db.execSQL("CREATE TABLE IF NOT EXISTS countries (id INTEGER PRIMARY KEY AUTOINCREMENT, country_name TEXT, iso_code TEXT)");
         Log.d(TAG, "Tablas creadas. Insertando datos iniciales...");
-        db.execSQL("INSERT INTO categories (category_name) VALUES ('Economia'), ('Deportes'), ('Politica'), ('Tecnologia'), ('Cultura')");
+        db.execSQL("INSERT INTO categories (category_name, category_tag) VALUES ('General', 'general'),('Negocios', 'business'), ('Entretenimiento', 'entertainment'), ('Salud', 'health'), ('Ciencia', 'science'), ('Deportes', 'sports'), ('Tecnologia', 'technology')");
         db.execSQL("INSERT INTO countries (country_name, iso_code) VALUES ('Estados Unidos', 'US'), ('Brasil', 'BR'), ('Argentina', 'AR')");
         Log.d(TAG, "Datos iniciales insertados");
     }

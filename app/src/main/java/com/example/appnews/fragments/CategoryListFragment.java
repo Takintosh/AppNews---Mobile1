@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.database.sqlite.SQLiteDatabase;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,7 +22,7 @@ import com.example.appnews.models.Country;
 
 import java.util.List;
 
-public class CategoryListFragment extends Fragment {
+public class CategoryListFragment extends Fragment implements CategoryListAdapter.CategoryClickListener {
 
     private RecyclerView recyclerViewCategories, recyclerViewCountries;
     private CategoryListAdapter categoryListAdapter;
@@ -50,12 +51,27 @@ public class CategoryListFragment extends Fragment {
         List<Country> listCountries = countryDAO.listCountries();
 
         // Inicializar adaptadores
-        categoryListAdapter = new CategoryListAdapter(listCategories);
+        categoryListAdapter = new CategoryListAdapter(listCategories, this);
         countryListAdapter = new CountryListAdapter(listCountries);
 
         recyclerViewCategories.setAdapter(categoryListAdapter);
         recyclerViewCountries.setAdapter(countryListAdapter);
-        
+
         return view;
     }
+
+    @Override
+    public void onCategoryClick(Category category) {
+        // Aquí se maneja el clic en la categoría seleccionada
+        // Puedes abrir el fragmento de listar noticias y pasar la categoría seleccionada como argumento
+        NewsListFragment newsListFragment = new NewsListFragment();
+        Bundle args = new Bundle();
+        args.putString("category", category.getCategoryTag());
+        newsListFragment.setArguments(args);
+        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, newsListFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
 }

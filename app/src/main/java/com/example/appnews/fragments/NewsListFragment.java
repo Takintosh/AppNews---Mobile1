@@ -27,14 +27,27 @@ public class NewsListFragment extends Fragment {
 
     private RecyclerView recyclerViewNews;
     private NewsListAdapter newsListAdapter;
+    private String category;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_news_list, container, false);
 
-        // Obtén la instancia de la API y realiza la llamada
+        // Obtén la categoría seleccionada del argumento
+        Bundle args = getArguments();
+        if (args != null) {
+            category = args.getString("category");
+        }
+
+        // Obtén la instancia de la API y realiza la llamada filtrando por la categoría si está seleccionada, de lo contrario, llama a getTopHeadlines sin filtrar
         NewsApiService apiService = ApiClient.getClient().create(NewsApiService.class);
-        Call<NewsResponse> call = apiService.getTopHeadlines("US");
+        Call<NewsResponse> call;
+        if (category != null && !category.isEmpty()) {
+            call = apiService.getTopHeadlinesByCategory("br", category);
+            Log.d("NewsListFragment", "onCreateView: " + category);
+        } else {
+            call = apiService.getTopHeadlines("br");
+        }
 
         // Configura el RecyclerView
         recyclerViewNews = view.findViewById(R.id.recyclerViewNews);
@@ -48,13 +61,14 @@ public class NewsListFragment extends Fragment {
                 if (response.isSuccessful()) {
                     NewsResponse newsResponse = response.body();
                     List<News> newsList = newsResponse.getArticles();
-                    Log.d("NewsListFragment", "onResponse: " + response.body().toString());
+                    Log.d("NewsListFragment", "A - onResponse: " + response.body().toString());
                     if (newsList != null) {
                         newsListAdapter.setNewsList(newsList);
+                        Log.d("NewsListFragment", "B - onResponse: " + newsList.toString());
                     }
                 } else {
                     // La respuesta no fue exitosa, maneja el error según tus necesidades
-                    Log.d("NewsListFragment", "onResponse: " + response.errorBody().toString());
+                    Log.d("NewsListFragment", "C - onResponse: " + response.errorBody().toString());
                 }
             }
 
@@ -66,7 +80,5 @@ public class NewsListFragment extends Fragment {
         });
 
         return view;
-
-
     }
 }

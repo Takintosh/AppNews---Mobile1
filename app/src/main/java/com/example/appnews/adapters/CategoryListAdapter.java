@@ -16,9 +16,11 @@ import java.util.List;
 public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapter.CategoryViewHolder> {
 
     private List<Category> categories;
+    private CategoryClickListener categoryClickListener;
 
-    public CategoryListAdapter(List<Category> categories) {
+    public CategoryListAdapter(List<Category> categories, CategoryClickListener categoryClickListener) {
         this.categories = categories;
+        this.categoryClickListener = categoryClickListener;
     }
 
     @NonNull
@@ -39,7 +41,7 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
         return categories.size();
     }
 
-    public static class CategoryViewHolder extends RecyclerView.ViewHolder {
+    public class CategoryViewHolder extends RecyclerView.ViewHolder {
         public TextView textViewCategory;
 
         public CategoryViewHolder(View itemView) {
@@ -49,7 +51,17 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
 
         public void bind(final Category category) {
             textViewCategory.setText(category.getCategoryName());
-            itemView.setTag(category);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    categoryClickListener.onCategoryClick(category);
+                }
+            });
         }
     }
+
+    public interface CategoryClickListener {
+        void onCategoryClick(Category category);
+    }
+
 }
