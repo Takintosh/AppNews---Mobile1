@@ -23,7 +23,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE IF NOT EXISTS countries (id INTEGER PRIMARY KEY AUTOINCREMENT, country_name TEXT, iso_code TEXT)");
         Log.d(TAG, "Tablas creadas. Insertando datos iniciales...");
         db.execSQL("INSERT INTO categories (category_name) VALUES ('Economia'), ('Deportes'), ('Politica'), ('Tecnologia'), ('Cultura')");
-        db.execSQL("INSERT INTO countries (country_name, iso_code) VALUES ('Uruguay', 'UY'), ('Brasil', 'BR')");
+        db.execSQL("INSERT INTO countries (country_name, iso_code) VALUES ('Estados Unidos', 'US'), ('Brasil', 'BR'), ('Argentina', 'AR')");
         Log.d(TAG, "Datos iniciales insertados");
     }
 
