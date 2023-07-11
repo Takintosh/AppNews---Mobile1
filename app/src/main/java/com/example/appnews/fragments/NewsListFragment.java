@@ -43,10 +43,10 @@ public class NewsListFragment extends Fragment {
         NewsApiService apiService = ApiClient.getClient().create(NewsApiService.class);
         Call<NewsResponse> call;
         if (category != null && !category.isEmpty()) {
-            call = apiService.getTopHeadlinesByCategory("br", category);
+            call = apiService.getTopHeadlinesByCategory("us", category);
             Log.d("NewsListFragment", "onCreateView: " + category);
         } else {
-            call = apiService.getTopHeadlines("br");
+            call = apiService.getTopHeadlines("us");
         }
 
         // Configura el RecyclerView
