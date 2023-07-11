@@ -3,6 +3,7 @@ package com.example.appnews.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appnews.R;
 import com.example.appnews.models.News;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -44,16 +46,23 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.NewsVi
 
         private TextView textViewTitle;
         private TextView textViewDescription;
+        private ImageView imageView;
 
         public NewsViewHolder(@NonNull View itemView) {
             super(itemView);
             textViewTitle = itemView.findViewById(R.id.textViewTitle);
             textViewDescription = itemView.findViewById(R.id.textViewDescription);
+            imageView = itemView.findViewById(R.id.imageViewNews);
         }
 
         public void bind(News news) {
             textViewTitle.setText(news.getTitle());
             textViewDescription.setText(news.getDescription());
+            Picasso.get()
+                    .load(news.getUrlToImage())
+                    .placeholder(R.drawable.ic_launcher_background)
+                    .error(R.drawable.ic_launcher_background)
+                    .into(imageView);
         }
     }
 

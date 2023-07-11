@@ -1,15 +1,15 @@
 package com.example.appnews.models;
 
 public class News {
-    private String title, author, description, url, imageUrl, publishedAt, content, sourceName;
+    private String title, author, description, url, urlToImage, publishedAt, content, sourceName;
 
     // Constructor
-    public News(String author, String title, String description, String url, String imageUrl, String publishedAt, String content, String sourceName) {
+    public News(String author, String title, String description, String url, String urlToImage, String publishedAt, String content, String sourceName) {
         this.author = author;
         this.title = title;
         this.description = description;
         this.url = url;
-        this.imageUrl = imageUrl;
+        this.urlToImage = urlToImage;
         this.publishedAt = publishedAt;
         this.content = content;
         this.sourceName = sourceName;
@@ -28,8 +28,8 @@ public class News {
     public String getUrl() { return url; }
     public void setUrl(String url) { this.url = url; }
 
-    public String getImageUrl() { return imageUrl; }
-    public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
+    public String getUrlToImage() { return urlToImage; }
+    public void setUrlToImage(String urlToImage) { this.urlToImage = urlToImage; }
 
     public String getPublishedAt() { return publishedAt; }
     public void setPublishedAt(String publishedAt) { this.publishedAt = publishedAt; }
