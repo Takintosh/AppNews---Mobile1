@@ -1,5 +1,4 @@
 package com.example.appnews.fragments;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -7,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,7 +23,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class NewsListFragment extends Fragment {
+public class NewsListFragment extends Fragment implements NewsListAdapter.OnItemClickListener {
 
     private RecyclerView recyclerViewNews;
     private NewsListAdapter newsListAdapter;
@@ -55,6 +55,9 @@ public class NewsListFragment extends Fragment {
         newsListAdapter = new NewsListAdapter();
         recyclerViewNews.setAdapter(newsListAdapter);
 
+        // Establece el listener de clic en el adaptador
+        newsListAdapter.setOnItemClickListener(this);
+
         call.enqueue(new Callback<NewsResponse>() {
             @Override
             public void onResponse(Call<NewsResponse> call, Response<NewsResponse> response) {
@@ -67,18 +70,28 @@ public class NewsListFragment extends Fragment {
                         Log.d("NewsListFragment", "B - onResponse: " + newsList.toString());
                     }
                 } else {
-                    // La respuesta no fue exitosa, maneja el error según tus necesidades
                     Log.d("NewsListFragment", "C - onResponse: " + response.errorBody().toString());
                 }
             }
 
             @Override
             public void onFailure(Call<NewsResponse> call, Throwable t) {
-                // Ocurrió un error en la llamada a la API, maneja el error según tus necesidades
                 Log.d("NewsListFragment", "onFailure: " + t.getLocalizedMessage());
             }
         });
 
         return view;
+    }
+
+    @Override
+    public void onItemClick(News news) {
+        NewsDetailsFragment newsDetailsFragment = new NewsDetailsFragment();
+        Bundle args = new Bundle();
+        args.putParcelable("news", news);
+        newsDetailsFragment.setArguments(args);
+        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, newsDetailsFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }

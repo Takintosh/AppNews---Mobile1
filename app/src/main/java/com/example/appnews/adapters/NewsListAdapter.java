@@ -17,7 +17,9 @@ import java.util.List;
 
 public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.NewsViewHolder>{
 
-    private List<News> newsList;
+    private static List<News> newsList;
+    private static OnItemClickListener onItemClickListener;
+
 
     public void setNewsList(List<News> newsList) {
         this.newsList = newsList;
@@ -35,7 +37,15 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.NewsVi
     public void onBindViewHolder(@NonNull NewsViewHolder holder, int position) {
         News news = newsList.get(position);
         holder.bind(news);
+
+        // Establece el clic en el elemento de la lista
+        holder.itemView.setOnClickListener(v -> {
+            if (onItemClickListener != null) {
+                onItemClickListener.onItemClick(news);
+            }
+        });
     }
+
 
     @Override
     public int getItemCount() {
@@ -53,6 +63,14 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.NewsVi
             textViewTitle = itemView.findViewById(R.id.textViewTitle);
             textViewDescription = itemView.findViewById(R.id.textViewDescription);
             imageView = itemView.findViewById(R.id.imageViewNews);
+
+            // Establece el clic en el elemento de la lista dentro del constructor
+            itemView.setOnClickListener(v -> {
+                int position = getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION && onItemClickListener != null) {
+                    onItemClickListener.onItemClick(newsList.get(position));
+                }
+            });
         }
 
         public void bind(News news) {
@@ -64,6 +82,14 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.NewsVi
                     .error(R.drawable.ic_launcher_background)
                     .into(imageView);
         }
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.onItemClickListener = listener;
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(News news);
     }
 
 }

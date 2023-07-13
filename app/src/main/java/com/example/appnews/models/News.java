@@ -1,6 +1,8 @@
 package com.example.appnews.models;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class News {
+public class News implements Parcelable {
     private String title, author, description, url, urlToImage, publishedAt, content, sourceName;
 
     // Constructor
@@ -40,4 +42,44 @@ public class News {
     public String getSourceName() { return sourceName; }
     public void setSourceName(String sourceName) { this.sourceName = sourceName; }
 
+    // Implementación de Parcelable
+    protected News(Parcel in) {
+        author = in.readString();
+        title = in.readString();
+        description = in.readString();
+        url = in.readString();
+        urlToImage = in.readString();
+        publishedAt = in.readString();
+        content = in.readString();
+        sourceName = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(author);
+        dest.writeString(title);
+        dest.writeString(description);
+        dest.writeString(url);
+        dest.writeString(urlToImage);
+        dest.writeString(publishedAt);
+        dest.writeString(content);
+        dest.writeString(sourceName);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<News> CREATOR = new Creator<News>() {
+        @Override
+        public News createFromParcel(Parcel in) {
+            return new News(in);
+        }
+
+        @Override
+        public News[] newArray(int size) {
+            return new News[size];
+        }
+    };
 }
