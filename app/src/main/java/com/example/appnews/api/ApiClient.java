@@ -7,6 +7,7 @@ public class ApiClient {
     private static final String BASE_URL = "https://newsapi.org/v2/";
     private static Retrofit retrofit = null;
 
+    // Obtiene la instancia del cliente Retrofit para realizar llamadas a la API
     public static Retrofit getClient() {
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()

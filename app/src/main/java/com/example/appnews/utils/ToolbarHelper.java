@@ -30,9 +30,9 @@ public class ToolbarHelper {
     public static boolean handleOptionsItemSelected(Activity activity, MenuItem item, FragmentManager fragmentManager, int fragmentContainerId) {
         if (item.getItemId() == R.id.action_categories) {
             Fragment currentFragment = getCurrentFragment(fragmentManager, fragmentContainerId);
-            // Abre el fragmento de categorías
+            // Verifica si el fragmento actual es el de categorías
             if (currentFragment instanceof CategoryListFragment) {
-                Log.d("ToolbarHelper", "Ya está abierto el fragmento de categorías");
+                Log.d("ToolbarHelper", "El fragmento de categorías ya está abierto");
             } else {
                 openCategoryList(fragmentManager);
                 Log.d("ToolbarHelper", "Abriendo el fragmento de categorías");

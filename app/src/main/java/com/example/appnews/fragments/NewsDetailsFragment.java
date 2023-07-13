@@ -37,4 +37,3 @@ public class NewsDetailsFragment extends Fragment {
         return view;
     }
 }
-

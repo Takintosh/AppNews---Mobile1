@@ -29,8 +29,10 @@ public class CategoryDAO {
         String selection = "id = ?";
         String[] selectionArgs = {String.valueOf(categoryId)};
 
+        // Ejecutar la consulta a la base de datos
         Cursor cursor = db.query("categories", projection, selection, selectionArgs, null, null, null);
         if (cursor.moveToFirst()) {
+            // Si hay resultados, crear un objeto Category y asignar los valores obtenidos del cursor
             Category category = new Category();
             category.setId(cursor.getInt(cursor.getColumnIndexOrThrow("id")));
             category.setCategoryName(cursor.getString(cursor.getColumnIndexOrThrow("category_name")));
@@ -47,9 +49,11 @@ public class CategoryDAO {
         List<Category> listCategories = new ArrayList<>();
         String[] projection = {"id", "category_name", "category_tag"};
 
+        // Ejecutar la consulta a la base de datos
         Cursor cursor = db.query("categories", projection, null, null, null, null, null);
 
         while (cursor.moveToNext()) {
+            // Iterar sobre los resultados y crear objetos Category para cada fila
             Category category = new Category();
             category.setId(cursor.getInt(cursor.getColumnIndexOrThrow("id")));
             category.setCategoryName(cursor.getString(cursor.getColumnIndexOrThrow("category_name")));
@@ -57,6 +61,7 @@ public class CategoryDAO {
 
             listCategories.add(category);
         }
+        cursor.close();
         return listCategories;
     }
 

@@ -30,8 +30,10 @@ public class CountryDAO {
         String selection = "id = ?";
         String[] selectionArgs = {String.valueOf(countryId)};
 
+        // Ejecutar la consulta a la base de datos
         Cursor cursor = db.query("countries", projection, selection, selectionArgs, null, null, null);
         if (cursor.moveToFirst()) {
+            // Si hay resultados, crear un objeto Country y asignar los valores obtenidos del cursor
             Country country = new Country();
             country.setId(cursor.getInt(cursor.getColumnIndexOrThrow("id")));
             country.setCountryName(cursor.getString(cursor.getColumnIndexOrThrow("country_name")));
@@ -48,9 +50,11 @@ public class CountryDAO {
         List<Country> listCountries = new ArrayList<>();
         String[] projection = {"id", "country_name", "iso_code"};
 
+        // Ejecutar la consulta a la base de datos
         Cursor cursor = db.query("countries", projection, null, null, null, null, null);
 
         while (cursor.moveToNext()) {
+            // Iterar sobre los resultados y crear objetos Country para cada fila
             Country country = new Country();
             country.setId(cursor.getInt(cursor.getColumnIndexOrThrow("id")));
             country.setCountryName(cursor.getString(cursor.getColumnIndexOrThrow("country_name")));

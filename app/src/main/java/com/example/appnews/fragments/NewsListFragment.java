@@ -1,4 +1,5 @@
 package com.example.appnews.fragments;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;

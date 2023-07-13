@@ -17,6 +17,7 @@ public class NewsDetailsAdapter extends RecyclerView.Adapter<NewsDetailsAdapter.
 
     private News news;
 
+    // Constructor que recibe la noticia
     public NewsDetailsAdapter(News news) {
         this.news = news;
     }
@@ -24,12 +25,14 @@ public class NewsDetailsAdapter extends RecyclerView.Adapter<NewsDetailsAdapter.
     @NonNull
     @Override
     public NewsDetailsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        // Infla el diseño del elemento de la lista de detalles de noticias
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_details_news, parent, false);
         return new NewsDetailsViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull NewsDetailsViewHolder holder, int position) {
+        // Vincula los datos de la noticia al ViewHolder
         holder.bind(news);
     }
 
@@ -38,6 +41,7 @@ public class NewsDetailsAdapter extends RecyclerView.Adapter<NewsDetailsAdapter.
         return 1; // Solo hay una noticia en la lista
     }
 
+    // ViewHolder para mostrar los detalles de la noticia
     public static class NewsDetailsViewHolder extends RecyclerView.ViewHolder {
         private TextView textViewTitle;
         private TextView textViewDate;
@@ -47,6 +51,7 @@ public class NewsDetailsAdapter extends RecyclerView.Adapter<NewsDetailsAdapter.
 
         public NewsDetailsViewHolder(View itemView) {
             super(itemView);
+            // Obtiene las referencias de los elementos de la vista del elemento de la lista de detalles de noticias
             imageViewNews = itemView.findViewById(R.id.imageViewNews);
             textViewTitle = itemView.findViewById(R.id.textViewTitle);
             textViewDate = itemView.findViewById(R.id.textViewPublishedAt);
@@ -55,10 +60,12 @@ public class NewsDetailsAdapter extends RecyclerView.Adapter<NewsDetailsAdapter.
         }
 
         public void bind(final News news) {
+            // Establece los valores de los campos de la noticia en los elementos de la vista
             textViewTitle.setText(news.getTitle());
             textViewDate.setText(news.getPublishedAt());
             textViewContent.setText(news.getContent());
             textViewAuthor.setText(news.getAuthor());
+            // Carga la imagen de la noticia utilizando Picasso
             Picasso.get()
                     .load(news.getUrlToImage())
                     .placeholder(R.drawable.ic_launcher_background)
